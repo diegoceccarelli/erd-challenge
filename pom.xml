@@ -42,7 +42,7 @@
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-bundle</artifactId>
-			<version>1.12</version>
+			<version>1.18.1</version>
 			<exclusions>
 
 
@@ -65,7 +65,7 @@
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-servlet</artifactId>
-			<version>1.12</version>
+			<version>1.18.1</version>
 			<exclusions>
 				<exclusion>
 					<groupId>javax.servlet</groupId>
@@ -81,7 +81,7 @@
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-server</artifactId>
-			<version>1.12</version>
+			<version>1.18.1</version>
 			<exclusions>
 				<exclusion>
 					<groupId>javax.servlet</groupId>
@@ -92,14 +92,18 @@
 			</exclusions>
 		</dependency>
 
-
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-common</artifactId>
+			<version>2.6</version>
+		</dependency>
 
 
 
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-core</artifactId>
-			<version>1.12</version>
+			<version>1.18.1</version>
 			<exclusions>
 				<exclusion>
 					<groupId>javax.servlet</groupId>
@@ -109,12 +113,12 @@
 
 			</exclusions>
 		</dependency>
-		
+
 		<dependency>
-	<groupId>com.sun.jersey.contribs</groupId>
-	<artifactId>jersey-multipart</artifactId>
-	<version>1.12</version>
-</dependency>
+			<groupId>com.sun.jersey.contribs</groupId>
+			<artifactId>jersey-multipart</artifactId>
+			<version>1.18.1</version>
+		</dependency>
 
 	</dependencies>
 	<build>
