@@ -17,8 +17,8 @@
 package it.cnr.isti.hpc.erd.rest;
 
 import it.cnr.isti.hpc.erd.Annotation;
+import it.cnr.isti.hpc.erd.Annotator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.FormParam;
@@ -37,12 +37,15 @@ import javax.ws.rs.core.MediaType;
 
 @Path("")
 public class RestService {
+
+	private final Annotator annotator = new Annotator();
+
 	@POST
 	@Path("/shortTrac")
 	@Produces({ MediaType.TEXT_PLAIN })
 	public String annotatePost(@FormParam("runID") String runId,
 			@FormParam("TextID") String textId, @FormParam("Text") String text) {
-		List<Annotation> annotations = annotate(runId, textId, text);
+		List<Annotation> annotations = annotator.annotate(runId, textId, text);
 
 		return encodeAnnotations(annotations);
 	}
@@ -52,28 +55,9 @@ public class RestService {
 	@Produces({ MediaType.TEXT_PLAIN })
 	public String annotateGet(@QueryParam("runID") String runId,
 			@QueryParam("TextID") String textId, @QueryParam("Text") String text) {
-		List<Annotation> annotations = annotate(runId, textId, text);
+		List<Annotation> annotations = annotator.annotate(runId, textId, text);
 
 		return encodeAnnotations(annotations);
-	}
-
-	private List<Annotation> annotate(String runId, String textID, String text) {
-		List<Annotation> annotations = new ArrayList<Annotation>();
-		Annotation a = new Annotation();
-		a.setQid("Q01");
-		a.setInterpretationSet(0);
-		a.setPrimaryId("/m/0fd4x");
-		a.setMentionText("total recall");
-		a.setScore(0.98f);
-		Annotation b = new Annotation();
-		b.setQid("Q01");
-		b.setInterpretationSet(0);
-		b.setPrimaryId("/m/0tc7");
-		b.setMentionText("arnold schwarzenegger");
-		b.setScore(0.95f);
-		annotations.add(a);
-		annotations.add(b);
-		return annotations;
 	}
 
 	private String encodeAnnotations(List<Annotation> annotations) {
