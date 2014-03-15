@@ -43,6 +43,7 @@ public class Annotator {
 	ProjectProperties properties = new ProjectProperties(Annotator.class);
 
 	public Annotator() {
+		properties = new ProjectProperties(Annotator.class);
 		try {
 			client = new DexterRestClient(properties.get("dexter.server"));
 			client.setWikinames(true);
