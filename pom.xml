@@ -19,12 +19,12 @@
 			<artifactId>hpc-utils</artifactId>
 			<version>0.0.5</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>it.cnr.isti.hpc</groupId>
 			<artifactId>dexter-client</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-			
+
 		</dependency>
 
 		<dependency>
@@ -32,12 +32,14 @@
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
 		</dependency>
-		
-			<dependency>
+
+		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-bundle</artifactId>
 			<version>1.12</version>
 			<exclusions>
+
+
 				<exclusion>
 					<groupId>javax.servlet</groupId>
 					<artifactId>servlet-api</artifactId>
@@ -46,6 +48,13 @@
 
 			</exclusions>
 		</dependency>
+
+		<dependency>
+			<groupId>it.cnr.isti.hpc</groupId>
+			<artifactId>dexter-client</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
@@ -60,8 +69,8 @@
 
 			</exclusions>
 		</dependency>
-		
-	
+
+
 
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
@@ -97,7 +106,7 @@
 
 	</dependencies>
 	<build>
-	    <resources>
+		<resources>
 			<resource>
 				<directory>src/main/webapp</directory>
 			</resource>
@@ -110,7 +119,7 @@
 				<configuration>
 					<source>1.5</source>
 					<target>1.5</target>
-        <encoding>UTF-8</encoding>
+					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -124,8 +133,8 @@
 					</descriptorRefs>
 				</configuration>
 			</plugin>
-			
-		
+
+
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>maven-jetty-plugin</artifactId>
