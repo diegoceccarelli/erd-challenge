@@ -21,14 +21,13 @@ import it.cnr.isti.hpc.erd.Annotator;
 
 import java.util.List;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.sun.jersey.api.representation.Form;
+import com.sun.jersey.multipart.FormDataParam;
 
 /**
  * @author Diego Ceccarelli <diego.ceccarelli@isti.cnr.it>
@@ -43,10 +42,10 @@ public class RestService {
 
 	@POST
 	@Path("/shortTrac")
-	@Consumes("multipart/form-data")
 	@Produces({ MediaType.TEXT_PLAIN })
-	public String annotatePost(Form form, @FormParam("runID") String runId,
-			@FormParam("TextID") String textId, @FormParam("Text") String text) {
+	public String annotatePost(Form form, @FormDataParam("runID") String runId,
+			@FormDataParam("TextID") String textId,
+			@FormDataParam("Text") String text) {
 		System.out.println(form);
 		List<Annotation> annotations = annotator.annotate(runId, textId, text);
 
