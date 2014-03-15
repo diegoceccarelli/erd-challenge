@@ -23,11 +23,9 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.sun.jersey.api.representation.Form;
@@ -55,15 +53,15 @@ public class RestService {
 		return encodeAnnotations(annotations);
 	}
 
-	@GET
-	@Path("/shortTrac")
-	@Produces({ MediaType.TEXT_PLAIN })
-	public String annotateGet(@QueryParam("runID") String runId,
-			@QueryParam("TextID") String textId, @QueryParam("Text") String text) {
-		List<Annotation> annotations = annotator.annotate(runId, textId, text);
-
-		return encodeAnnotations(annotations);
-	}
+	// @GET
+	// @Path("/shortTrac")
+	// @Produces({ MediaType.TEXT_PLAIN })
+	// public String annotateGet(@QueryParam("runID") String runId,
+	// @QueryParam("TextID") String textId, @QueryParam("Text") String text) {
+	// List<Annotation> annotations = annotator.annotate(runId, textId, text);
+	//
+	// return encodeAnnotations(annotations);
+	// }
 
 	private String encodeAnnotations(List<Annotation> annotations) {
 		StringBuilder sb = new StringBuilder();
