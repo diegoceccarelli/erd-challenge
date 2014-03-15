@@ -31,17 +31,8 @@
  */
 package it.cnr.isti.hpc.erd;
 
-import it.cnr.isti.hpc.dexter.rest.client.DexterRestClient;
-import it.cnr.isti.hpc.dexter.rest.domain.AnnotatedDocument;
-import it.cnr.isti.hpc.dexter.rest.domain.AnnotatedSpot;
-import it.cnr.isti.hpc.property.ProjectProperties;
-
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Diego Ceccarelli <diego.ceccarelli@isti.cnr.it>
@@ -50,49 +41,26 @@ import org.slf4j.LoggerFactory;
  */
 public class Annotator {
 
-	DexterRestClient client = null;
-	WikipediaToFreebase map = null;
-
-	private static final Logger logger = LoggerFactory
-			.getLogger(Annotator.class);
-
-	ProjectProperties properties = new ProjectProperties(Annotator.class);
-
 	public Annotator() {
-		try {
-			client = new DexterRestClient(properties.get("dexter.server"));
-			client.setWikinames(true);
-
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.exit(-1);
-		}
-		map = new WikipediaToFreebase("mapdb");
 
 	}
 
 	public List<Annotation> annotate(String runId, String textID, String text) {
-		AnnotatedDocument ad = client.annotate(text, 100);
-		List<AnnotatedSpot> spots = ad.getSpots();
 		List<Annotation> annotations = new ArrayList<Annotation>();
-		for (AnnotatedSpot spot : spots) {
-			String freebaseid;
-			if (!map.hasEntity(spot.getWikiname())) {
-				continue;
-			}
-			freebaseid = map.getFreebaseId(spot.getWikiname());
-			logger.info("{} -> {} ", spot.getWikiname(), freebaseid);
-			Annotation a = new Annotation();
-			a.setQid(textID);
-			a.setPrimaryId(freebaseid);
-			a.setInterpretationSet(0);
-			a.setMentionText(spot.getMention());
-			a.setScore((float) spot.getScore());
-			annotations.add(a);
-
-		}
-
+		Annotation a = new Annotation();
+		a.setQid(textID);
+		a.setInterpretationSet(0);
+		a.setPrimaryId("/m/0fd4x");
+		a.setMentionText("total recall");
+		a.setScore(0.98f);
+		Annotation b = new Annotation();
+		b.setQid(textID);
+		b.setInterpretationSet(0);
+		b.setPrimaryId("/m/0tc7");
+		b.setMentionText("arnold schwarzenegger");
+		b.setScore(0.95f);
+		annotations.add(a);
+		annotations.add(b);
 		return annotations;
 	}
 
