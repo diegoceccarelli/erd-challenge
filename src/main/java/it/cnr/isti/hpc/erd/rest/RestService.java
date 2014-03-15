@@ -21,6 +21,7 @@ import it.cnr.isti.hpc.erd.Annotator;
 
 import java.util.List;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -44,6 +45,7 @@ public class RestService {
 
 	@POST
 	@Path("/shortTrac")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces({ MediaType.TEXT_PLAIN })
 	public String annotatePost(Form form, @FormParam("runID") String runId,
 			@FormParam("TextID") String textId, @FormParam("Text") String text) {
