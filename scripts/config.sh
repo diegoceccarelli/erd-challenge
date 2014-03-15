@@ -6,7 +6,7 @@ LOG=INFO
 ##LOG=DEBUG
 LOGAT=1000
 E_BADARGS=65
-JAVA="java $XMX -Dlogat=$LOGAT -Dlog=$LOG -cp .:target/erd-contest-0.0.1-SNAPSHOT-jar-with-dependencies.jar "
+JAVA="java $XMX -Dlogat=$LOGAT -Dlog=$LOG -cp .:bin/erd-challenge.jar "
 CLI=it.cnr.isti.hpc.erd.cli
 
 
