@@ -43,7 +43,7 @@ public class RestService {
 
 	@POST
 	@Path("/shortTrac")
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces({ MediaType.TEXT_PLAIN })
 	public String annotatePost(Form form, @FormParam("runID") String runId,
 			@FormParam("TextID") String textId, @FormParam("Text") String text) {
