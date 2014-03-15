@@ -29,6 +29,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import com.sun.jersey.api.representation.Form;
+
 /**
  * @author Diego Ceccarelli <diego.ceccarelli@isti.cnr.it>
  * 
@@ -43,8 +45,9 @@ public class RestService {
 	@POST
 	@Path("/shortTrac")
 	@Produces({ MediaType.TEXT_PLAIN })
-	public String annotatePost(@FormParam("runID") String runId,
+	public String annotatePost(Form form, @FormParam("runID") String runId,
 			@FormParam("TextID") String textId, @FormParam("Text") String text) {
+		System.out.println(form);
 		List<Annotation> annotations = annotator.annotate(runId, textId, text);
 
 		return encodeAnnotations(annotations);

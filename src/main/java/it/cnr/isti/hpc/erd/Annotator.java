@@ -18,7 +18,6 @@ package it.cnr.isti.hpc.erd;
 import it.cnr.isti.hpc.dexter.rest.client.DexterRestClient;
 import it.cnr.isti.hpc.dexter.rest.domain.AnnotatedDocument;
 import it.cnr.isti.hpc.dexter.rest.domain.AnnotatedSpot;
-import it.cnr.isti.hpc.property.ProjectProperties;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -40,12 +39,9 @@ public class Annotator {
 	private static final Logger logger = LoggerFactory
 			.getLogger(Annotator.class);
 
-	ProjectProperties properties = new ProjectProperties(Annotator.class);
-
 	public Annotator() {
-		properties = new ProjectProperties(Annotator.class);
 		try {
-			client = new DexterRestClient(properties.get("dexter.server"));
+			client = new DexterRestClient(System.getProperty("server"));
 			client.setWikinames(true);
 
 		} catch (URISyntaxException e) {
