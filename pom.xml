@@ -28,67 +28,43 @@
 			<version>4.11</version>
 		</dependency>
 		
-			<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-bundle</artifactId>
-			<version>1.12</version>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.servlet</groupId>
-					<artifactId>servlet-api</artifactId>
-
-				</exclusion>
-
-			</exclusions>
-		</dependency>
-
 		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-servlet</artifactId>
-			<version>1.12</version>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.servlet</groupId>
-					<artifactId>servlet-api</artifactId>
+					<groupId>com.sun.jersey</groupId>
+					<artifactId>jersey-servlet</artifactId>
+					<version>1.17</version>
+				</dependency>
 
-				</exclusion>
-
-			</exclusions>
-		</dependency>
 		
-	
 
-		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-server</artifactId>
-			<version>1.12</version>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.servlet</groupId>
-					<artifactId>servlet-api</artifactId>
 
-				</exclusion>
+				<dependency>
+					<groupId>com.sun.jersey.contribs</groupId>
+					<artifactId>jersey-multipart</artifactId>
+					<version>1.17</version>
+				</dependency>
+				<dependency>
+					<groupId>com.sun.jersey</groupId>
+					<artifactId>jersey-json</artifactId>
+					<version>1.17</version>
+				</dependency>
+				<dependency>
+					<groupId>com.sun.jersey</groupId>
+					<artifactId>jersey-bundle</artifactId>
+					<version>1.17</version>
+				</dependency>
 
-			</exclusions>
+				<dependency>
+					<groupId>org.jvnet</groupId>
+					<artifactId>mimepull</artifactId>
+					<version>1.6</version>
+				</dependency>
 		</dependency>
 
 
 
 
 
-		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-core</artifactId>
-			<version>1.12</version>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.servlet</groupId>
-					<artifactId>servlet-api</artifactId>
-
-				</exclusion>
-
-			</exclusions>
-		</dependency>
+		
 
 	</dependencies>
 	<build>
