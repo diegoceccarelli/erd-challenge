@@ -1,7 +1,7 @@
 Entity Recognition and Disambiguation Challenge
 =============
 
-This package contains code helpful code for the [Entity Recognition and Disambiguation Challenge](http://web-ngram.research.microsoft.com/erd2014). 
+This package contains code for the [Entity Recognition and Disambiguation Challenge](http://web-ngram.research.microsoft.com/erd2014). 
 It took me some time to configure all the stuff and I think it could be useful for other teams participating in the challenge.  
 
 The package contains two utilities: 
