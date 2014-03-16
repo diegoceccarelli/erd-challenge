@@ -26,18 +26,18 @@
 			<artifactId>dexter-client</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<exclusions>
-			    <exclusion>
-			          <groupId>com.sun.jersey</groupId>
-     				   <artifactId>jersey-servlet</artifactId>	
-			    </exclusion>
-			    <exclusion>
-			          <groupId>com.sun.jersey</groupId>
-     				   <artifactId>jersey-multipart</artifactId>	
-			    </exclusion>
-			     <exclusion>
-			          <groupId>com.sun.jersey</groupId>
-     				   <artifactId>jersey-bundle</artifactId>	
-			    </exclusion>
+				<exclusion>
+					<groupId>com.sun.jersey</groupId>
+					<artifactId>jersey-servlet</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jersey</groupId>
+					<artifactId>jersey-multipart</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jersey</groupId>
+					<artifactId>jersey-bundle</artifactId>
+				</exclusion>
 			</exclusions>
 
 		</dependency>
@@ -56,32 +56,36 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
-	<dependency>
-        <groupId>com.sun.jersey</groupId>
-        <artifactId>jersey-servlet</artifactId>
-        <version>1.17</version>
-    </dependency>
-    <dependency>
-        <groupId>com.sun.jersey.contribs</groupId>
-        <artifactId>jersey-multipart</artifactId>
-        <version>1.17</version>
-    </dependency>
-    <dependency>
-        <groupId>com.sun.jersey</groupId>
-        <artifactId>jersey-json</artifactId>
-        <version>1.17</version>
-    </dependency>
-    <dependency>
-        <groupId>com.sun.jersey</groupId>
-        <artifactId>jersey-bundle</artifactId>
-        <version>1.17</version>
-    </dependency> 
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-servlet</artifactId>
+			<version>1.17</version>
+		</dependency>
 
-    <dependency>
-            <groupId>org.jvnet</groupId>
-        <artifactId>mimepull</artifactId>
-        <version>1.6</version>
-    </dependency>
+		
+
+
+		<dependency>
+			<groupId>com.sun.jersey.contribs</groupId>
+			<artifactId>jersey-multipart</artifactId>
+			<version>1.17</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-json</artifactId>
+			<version>1.17</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-bundle</artifactId>
+			<version>1.17</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jvnet</groupId>
+			<artifactId>mimepull</artifactId>
+			<version>1.6</version>
+		</dependency>
 
 
 
@@ -159,6 +163,10 @@
 		<repository>
 			<id>dropbox</id>
 			<url>https://dl.dropboxusercontent.com/u/4663256/mvn-repository/</url>
+		</repository>
+		<repository>
+			<id>central</id>
+			<url>http://repo1.maven.org/maven2</url>
 		</repository>
 	</repositories>
 </project>
