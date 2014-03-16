@@ -12,7 +12,7 @@ The package contains two utilities:
 
 ### Index the entity.tsv file
   
-Once you have download the [entity.tsv file](http://web-ngram.research.microsoft.com/erd2014/entity.tsv) provided in the [Datasets page](http://web-ngram.research.microsoft.com/erd2014/Datasets.aspx), you can index it running 
+Once you have downloaded the [entity.tsv file](http://web-ngram.research.microsoft.com/erd2014/entity.tsv) provided in the [Datasets page](http://web-ngram.research.microsoft.com/erd2014/Datasets.aspx), you can index it running 
 
     ./script/index.sh entity.tsv mapdb
 
