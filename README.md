@@ -6,7 +6,7 @@ It took me some time to configure all the stuff and I think it could be useful f
 
 The package contains two utilities: 
 
-  * code to index the freebase <-> wikipedia file provided by the organizers, in order to convert the wikipedia labels to freebase id (and to filter out not invalid entities);
+  * code to index the freebase <-> wikipedia file provided by the organizers, in order to convert the wikipedia labels to freebase id (and to filter out invalid entities);
   * code to start the REST service (for now, just the short track).
   
 
