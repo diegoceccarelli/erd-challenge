@@ -19,7 +19,7 @@ Once you have download the [entity.tsv file](http://web-ngram.research.microsoft
 This command will create a folder `mapdb` containing an index with all the mappings. At runtime you can access 
 the index creating a WikipediaToFreebase object:
 
-    WikipediaToFreebase wikiToFreebase = new WikipediaToFreebase("mapdb"); // the name of the folder
+    WikipediaToFreebase wikiToFreebase = new WikipediaToFreebase("mapdb"); // the folder name
 
 And then use:
 

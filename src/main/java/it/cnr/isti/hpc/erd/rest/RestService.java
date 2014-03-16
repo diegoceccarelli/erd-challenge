@@ -56,7 +56,7 @@ public class RestService {
 	}
 
 	@GET
-	@Path("/shortTrac")
+	@Path("/shortTrack")
 	@Produces({ MediaType.TEXT_PLAIN })
 	public String annotateGet(@QueryParam("runID") String runId,
 			@QueryParam("TextID") String textId, @QueryParam("Text") String text) {
