@@ -39,7 +39,7 @@ run the command
 
 and the rest service will answer at the address:
 
-   http://$(your-ip-address):8080/erd-challenge/rest/shortTrack
+    http://$(your-ip-address):8080/erd-challenge/rest/shortTrack
    
 I hope this will help ;) 
 
