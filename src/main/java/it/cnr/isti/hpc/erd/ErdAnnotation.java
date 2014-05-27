@@ -40,7 +40,9 @@ public class ErdAnnotation {
 			sb.append(a.toTsv()).append('\n');
 		}
 		// delete the last newline;
-		sb.deleteCharAt(sb.length() - 1);
+		if (sb.length() > 0) {
+			sb.deleteCharAt(sb.length() - 1);
+		}
 		return sb.toString();
 	}
 
