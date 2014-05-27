@@ -98,6 +98,7 @@ public class Annotator {
 
 		try {
 			log.write(gson.toJson(erdDocument));
+			log.newLine();
 			log.flush();
 		} catch (IOException e) {
 			System.out.println("writing the log file");
