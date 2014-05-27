@@ -18,13 +18,16 @@ package it.cnr.isti.hpc.erd.rest;
 
 import it.cnr.isti.hpc.erd.Annotation;
 import it.cnr.isti.hpc.erd.Annotator;
+import it.cnr.isti.hpc.erd.ErdAnnotation;
 
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.sun.jersey.multipart.FormDataParam;
@@ -53,15 +56,15 @@ public class RestService {
 		return encodeAnnotations(annotations);
 	}
 
-	// @GET
-	// @Path("/shortTrac")
-	// @Produces({ MediaType.TEXT_PLAIN })
-	// public String annotateGet(@QueryParam("runID") String runId,
-	// @QueryParam("TextID") String textId, @QueryParam("Text") String text) {
-	// List<Annotation> annotations = annotator.annotate(runId, textId, text);
-	//
-	// return encodeAnnotations(annotations);
-	// }
+	@GET
+	@Path("/shortTrac")
+	@Produces({ MediaType.TEXT_PLAIN })
+	public String annotateGet(@QueryParam("runID") String runId,
+			@QueryParam("TextID") String textId, @QueryParam("Text") String text) {
+		List<Annotation> annotations = annotator.annotate(runId, textId, text);
+
+		return encodeAnnotations(annotations);
+	}
 
 	private String encodeAnnotations(List<Annotation> annotations) {
 		StringBuilder sb = new StringBuilder();
@@ -70,6 +73,33 @@ public class RestService {
 
 		}
 		return sb.toString();
+	}
+
+	@GET
+	@Path("/longTrac")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces({ MediaType.TEXT_PLAIN })
+	public String annotateLongPost(@QueryParam("runID") String runId,
+			@QueryParam("TextID") String textId, @QueryParam("Text") String text) {
+
+		List<ErdAnnotation> annotations = annotator.annotateLongDocument(runId,
+				textId, text);
+
+		return ErdAnnotation.encodeAnnotations(annotations);
+	}
+
+	@POST
+	@Path("/longTrac")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces({ MediaType.TEXT_PLAIN })
+	public String annotateLongGet(@FormDataParam("runID") String runId,
+			@FormDataParam("TextID") String textId,
+			@FormDataParam("Text") String text) {
+
+		List<ErdAnnotation> annotations = annotator.annotateLongDocument(runId,
+				textId, text);
+
+		return ErdAnnotation.encodeAnnotations(annotations);
 	}
 
 }

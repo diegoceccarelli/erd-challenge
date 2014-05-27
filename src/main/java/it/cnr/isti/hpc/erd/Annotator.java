@@ -18,13 +18,19 @@ package it.cnr.isti.hpc.erd;
 import it.cnr.isti.hpc.dexter.rest.client.DexterRestClient;
 import it.cnr.isti.hpc.dexter.rest.domain.AnnotatedDocument;
 import it.cnr.isti.hpc.dexter.rest.domain.AnnotatedSpot;
+import it.cnr.isti.hpc.io.IOUtils;
+import it.cnr.isti.hpc.property.ProjectProperties;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.gson.Gson;
 
 /**
  * @author Diego Ceccarelli <diego.ceccarelli@isti.cnr.it>
@@ -35,13 +41,20 @@ public class Annotator {
 
 	DexterRestClient client = null;
 	WikipediaToFreebase map = null;
+	BufferedWriter log;
+	Gson gson = new Gson();
+	private static ProjectProperties properties = new ProjectProperties(
+			Annotator.class);
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(Annotator.class);
 
 	public Annotator() {
+		log = IOUtils.getPlainOrCompressedUTF8Writer("erd-documents"
+				+ System.currentTimeMillis() + ".json");
 		try {
-			client = new DexterRestClient(System.getProperty("server"));
+			client = new DexterRestClient(properties.get("dexter.server"));
+
 			client.setWikinames(true);
 
 		} catch (URISyntaxException e) {
@@ -59,6 +72,8 @@ public class Annotator {
 		List<AnnotatedSpot> spots = ad.getSpots();
 		List<Annotation> annotations = new ArrayList<Annotation>();
 		for (AnnotatedSpot spot : spots) {
+			if (spot.getScore() < 0.5)
+				continue;
 			String freebaseid;
 			if (!map.hasEntity(spot.getWikiname())) {
 				continue;
@@ -76,6 +91,57 @@ public class Annotator {
 		}
 
 		return annotations;
+	}
+
+	public List<ErdAnnotation> annotateLongDocument(String runId,
+			String textId, String text) {
+		AnnotatedDocument ad = client.annotate(text, 100);
+		ErdDocument erdDocument = new ErdDocument(runId, textId, text);
+		try {
+			log.write(gson.toJson(erdDocument));
+			log.flush();
+		} catch (IOException e) {
+			System.out.println("writing the log file");
+			e.printStackTrace();
+		}
+
+		List<AnnotatedSpot> spots = ad.getSpots();
+		List<ErdAnnotation> annotations = new ArrayList<ErdAnnotation>();
+		for (AnnotatedSpot spot : spots) {
+			String freebaseid;
+			if (!map.hasEntity(spot.getWikiname())) {
+				continue;
+			}
+			freebaseid = map.getFreebaseId(spot.getWikiname());
+			logger.info("{} -> {} ", spot.getWikiname(), freebaseid);
+			ErdAnnotation a = new ErdAnnotation();
+			a.setDocId(textId);
+			a.setPrimaryId(freebaseid);
+			a.setSecondId(spot.getWikiname());
+			a.setMentionText(spot.getMention());
+			a.setStart(spot.getStart());
+			a.setEnd(spot.getEnd());
+			a.setScore1(spot.getScore());
+			a.setScore2(spot.getCommonness());
+			annotations.add(a);
+
+		}
+
+		return annotations;
+	}
+
+	public static class ErdDocument {
+		String runId;
+		String textId;
+		String text;
+
+		public ErdDocument(String runId, String textId, String text) {
+			super();
+			this.runId = runId;
+			this.textId = textId;
+			this.text = text;
+		}
+
 	}
 
 }
