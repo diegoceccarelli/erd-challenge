@@ -41,7 +41,9 @@ public class Annotator {
 
 	DexterRestClient client = null;
 	WikipediaToFreebase map = null;
-	BufferedWriter log;
+	private static BufferedWriter log = IOUtils
+			.getPlainOrCompressedUTF8Writer("erd-documents"
+					+ System.currentTimeMillis() + ".json");
 	Gson gson = new Gson();
 	private static ProjectProperties properties = new ProjectProperties(
 			Annotator.class);
@@ -50,8 +52,7 @@ public class Annotator {
 			.getLogger(Annotator.class);
 
 	public Annotator() {
-		log = IOUtils.getPlainOrCompressedUTF8Writer("erd-documents"
-				+ System.currentTimeMillis() + ".json");
+
 		try {
 			client = new DexterRestClient(properties.get("dexter.server"));
 
@@ -93,10 +94,8 @@ public class Annotator {
 		return annotations;
 	}
 
-	public List<ErdAnnotation> annotateLongDocument(String runId,
-			String textId, String text) {
-		AnnotatedDocument ad = client.annotate(text, 100);
-		ErdDocument erdDocument = new ErdDocument(runId, textId, text);
+	private synchronized void writeLog(ErdDocument erdDocument) {
+
 		try {
 			log.write(gson.toJson(erdDocument));
 			log.flush();
@@ -104,6 +103,13 @@ public class Annotator {
 			System.out.println("writing the log file");
 			e.printStackTrace();
 		}
+	}
+
+	public List<ErdAnnotation> annotateLongDocument(String runId,
+			String textId, String text) {
+		AnnotatedDocument ad = client.annotate(text, 100);
+		ErdDocument erdDocument = new ErdDocument(runId, textId, text);
+		writeLog(erdDocument);
 
 		List<AnnotatedSpot> spots = ad.getSpots();
 		List<ErdAnnotation> annotations = new ArrayList<ErdAnnotation>();
