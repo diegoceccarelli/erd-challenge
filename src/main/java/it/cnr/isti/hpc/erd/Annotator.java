@@ -81,6 +81,9 @@ public class Annotator {
 		client.addParams("dsb", "wikiminer");
 	}
 
+	/**
+	 * SHORT
+	 */
 	public List<Annotation> annotate(String runId, String textID, String text) {
 
 		AnnotatedDocument ad = client.annotate(text, 500);
@@ -128,16 +131,21 @@ public class Annotator {
 
 	public List<ErdAnnotation> annotateLongDocument(String runId,
 			String textId, String text) {
-		AnnotatedDocument ad = client.annotate(text, 100);
+		AnnotatedDocument ad = client.annotate(text, 500);
 		ErdDocument erdDocument = new ErdDocument(runId, textId, text);
 		writeLog(erdDocument);
 
 		List<AnnotatedSpot> spots = ad.getSpots();
 		List<ErdAnnotation> annotations = new ArrayList<ErdAnnotation>();
+		logger.info("text:\n\n {} \n\n", text);
+		logger.info("spots annotated:\n\n {} \n\n", spots.size());
 		for (AnnotatedSpot spot : spots) {
 			String freebaseid;
-			if (spot.getScore() < 0.5)
+			if (spot.getScore() < confidence) {
+				logger.info("removing {} < confidence {}", spot.getMention(),
+						confidence);
 				continue;
+			}
 			if (!map.hasEntity(spot.getWikiname())) {
 				continue;
 			}
