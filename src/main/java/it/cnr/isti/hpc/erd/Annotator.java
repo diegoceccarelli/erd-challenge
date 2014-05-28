@@ -55,11 +55,7 @@ public class Annotator {
 
 		try {
 			client = new DexterRestClient(properties.get("dexter.server"));
-			client.addParams("dsb", "tagme");
-			client.addParams("epsilon", "0.8");
 
-			client.addParams("window-size", "100");
-			client.addParams("alpha", "0.5");
 			client.setWikinames(true);
 
 		} catch (URISyntaxException e) {
@@ -68,7 +64,19 @@ public class Annotator {
 			System.exit(-1);
 		}
 		map = new WikipediaToFreebase("mapdb");
+		wikiminer();
+	}
 
+	public void tagme() {
+		client.addParams("dsb", "tagme");
+		client.addParams("epsilon", "0.8");
+
+		client.addParams("window-size", "100");
+		client.addParams("alpha", "0.5");
+	}
+
+	public void wikiminer() {
+		client.addParams("dsb", "wikiminer");
 	}
 
 	public List<Annotation> annotate(String runId, String textID, String text) {
