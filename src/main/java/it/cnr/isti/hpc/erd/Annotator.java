@@ -86,8 +86,10 @@ public class Annotator {
 		AnnotatedDocument ad = client.annotate(text, 500);
 		logger.info("text:\n\n {} \n\n", text);
 		List<AnnotatedSpot> spots = ad.getSpots();
+		logger.info("spots annotated:\n\n {} \n\n", spots.size());
 		List<Annotation> annotations = new ArrayList<Annotation>();
 		for (AnnotatedSpot spot : spots) {
+			System.out.println("considering spot " + spot);
 			if (spot.getScore() < confidence) {
 				logger.info("removing {} < confidence {}", spot.getMention(),
 						confidence);
