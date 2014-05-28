@@ -41,12 +41,14 @@ public class Annotator {
 
 	DexterRestClient client = null;
 	WikipediaToFreebase map = null;
+
 	private static BufferedWriter log = IOUtils
 			.getPlainOrCompressedUTF8Writer("erd-documents"
 					+ System.currentTimeMillis() + ".json");
 	Gson gson = new Gson();
 	private static ProjectProperties properties = new ProjectProperties(
 			Annotator.class);
+	private static double confidence = properties.getDouble("min.confidence");
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(Annotator.class);
@@ -80,13 +82,17 @@ public class Annotator {
 	}
 
 	public List<Annotation> annotate(String runId, String textID, String text) {
-		AnnotatedDocument ad = client.annotate(text, 100);
+
+		AnnotatedDocument ad = client.annotate(text, 500);
 		logger.info("text:\n\n {} \n\n", text);
 		List<AnnotatedSpot> spots = ad.getSpots();
 		List<Annotation> annotations = new ArrayList<Annotation>();
 		for (AnnotatedSpot spot : spots) {
-			if (spot.getScore() < properties.getDouble("min.confidence"))
+			if (spot.getScore() < confidence) {
+				logger.info("removing {} < confidence {}", spot.getMention(),
+						confidence);
 				continue;
+			}
 			String freebaseid;
 			if (!map.hasEntity(spot.getWikiname())) {
 				continue;
