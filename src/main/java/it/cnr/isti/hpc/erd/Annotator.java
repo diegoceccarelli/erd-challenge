@@ -85,7 +85,7 @@ public class Annotator {
 		List<AnnotatedSpot> spots = ad.getSpots();
 		List<Annotation> annotations = new ArrayList<Annotation>();
 		for (AnnotatedSpot spot : spots) {
-			if (spot.getScore() < 0.5)
+			if (spot.getScore() < properties.getDouble("min.confidence"))
 				continue;
 			String freebaseid;
 			if (!map.hasEntity(spot.getWikiname())) {
