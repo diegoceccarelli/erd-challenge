@@ -132,7 +132,7 @@ public class Annotator {
 	public List<ErdAnnotation> annotateLongDocument(String runId,
 			String textId, String text) {
 		AnnotatedDocument ad = client.annotate(text, 500);
-		ErdDocument erdDocument = new ErdDocument(runId, textId, text);
+		ErdDocument erdDocument = new ErdDocument(runId, textId, text, true);
 		writeLog(erdDocument);
 
 		List<AnnotatedSpot> spots = ad.getSpots();
@@ -171,11 +171,13 @@ public class Annotator {
 		String runId;
 		String textId;
 		String text;
+		boolean hit;
 
-		public ErdDocument(String runId, String textId, String text) {
+		public ErdDocument(String runId, String textId, String text, boolean hit) {
 			super();
 			this.runId = runId;
 			this.textId = textId;
+			this.hit = hit;
 			this.text = text;
 		}
 

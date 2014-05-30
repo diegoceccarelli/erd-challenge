@@ -92,22 +92,24 @@ public class CachedAnnotator {
 	public List<ErdAnnotation> annotateLongDocument(String runId,
 			String textId, String text) {
 
-		ErdDocument erdDocument = new ErdDocument(runId, textId, text);
-		writeLog(erdDocument);
 		List<ErdAnnotation> annotations = Collections.emptyList();
+		boolean hit = true;
 		if (annotation.containsKey(textId)) {
 			logger.info("hit! {} ", textId);
 			annotations = annotation.get(textId);
 
 		} else {
 			logger.info("miss {} ", textId);
+			hit = false;
 		}
+		ErdDocument erdDocument = new ErdDocument(runId, textId, text, hit);
 		try {
-			Thread.sleep(8000 + (int) (Math.random() * 4000));
+			Thread.sleep(2000 + (int) (Math.random() * 4000));
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		writeLog(erdDocument);
 		return annotations;
 	}
 
