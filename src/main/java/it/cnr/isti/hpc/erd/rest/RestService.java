@@ -17,7 +17,7 @@
 package it.cnr.isti.hpc.erd.rest;
 
 import it.cnr.isti.hpc.erd.Annotation;
-import it.cnr.isti.hpc.erd.Annotator;
+import it.cnr.isti.hpc.erd.CachedAnnotator;
 import it.cnr.isti.hpc.erd.ErdAnnotation;
 
 import java.util.List;
@@ -41,7 +41,7 @@ import com.sun.jersey.multipart.FormDataParam;
 @Path("")
 public class RestService {
 
-	private final Annotator annotator = new Annotator();
+	private final CachedAnnotator annotator = new CachedAnnotator();
 
 	@POST
 	@Path("/shortTrac")
