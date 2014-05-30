@@ -15,10 +15,14 @@
  */
 package it.cnr.isti.hpc.erd;
 
+import it.cnr.isti.hpc.erd.Annotator.ErdDocument;
 import it.cnr.isti.hpc.erd.file.FileAnnotation;
+import it.cnr.isti.hpc.io.IOUtils;
 import it.cnr.isti.hpc.io.reader.RecordReader;
 import it.cnr.isti.hpc.property.ProjectProperties;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -28,6 +32,8 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.Gson;
+
 /**
  * @author Diego Ceccarelli <diego.ceccarelli@isti.cnr.it>
  * 
@@ -35,11 +41,16 @@ import org.slf4j.LoggerFactory;
  */
 public class CachedAnnotator {
 
+	private static final Gson gson = new Gson();
 	private static final Logger logger = LoggerFactory
 			.getLogger(CachedAnnotator.class);
 	Map<String, List<ErdAnnotation>> annotation;
 	static ProjectProperties properties = new ProjectProperties(
 			CachedAnnotator.class);
+
+	private static BufferedWriter log = IOUtils
+			.getPlainOrCompressedUTF8Writer("erd-documents"
+					+ System.currentTimeMillis() + ".json");
 
 	public CachedAnnotator() {
 		load(properties.get("annotations"));
@@ -80,6 +91,9 @@ public class CachedAnnotator {
 
 	public List<ErdAnnotation> annotateLongDocument(String runId,
 			String textId, String text) {
+
+		ErdDocument erdDocument = new ErdDocument(runId, textId, text);
+		writeLog(erdDocument);
 		List<ErdAnnotation> annotations = Collections.emptyList();
 		if (annotation.containsKey(textId)) {
 			logger.info("hit! {} ", textId);
@@ -95,6 +109,18 @@ public class CachedAnnotator {
 			e.printStackTrace();
 		}
 		return annotations;
+	}
+
+	private synchronized void writeLog(ErdDocument erdDocument) {
+
+		try {
+			log.write(gson.toJson(erdDocument));
+			log.newLine();
+			log.flush();
+		} catch (IOException e) {
+			System.out.println("writing the log file");
+			e.printStackTrace();
+		}
 	}
 
 	public List<Annotation> annotate(String runId, String textId, String text) {
