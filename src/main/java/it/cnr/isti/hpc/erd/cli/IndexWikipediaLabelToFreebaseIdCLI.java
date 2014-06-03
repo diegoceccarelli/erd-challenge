@@ -76,9 +76,12 @@ public class IndexWikipediaLabelToFreebaseIdCLI extends
 
 		ProgressLogger pl = new ProgressLogger("indexed {} records", 100000);
 		Map<String, String> map = db.getCollection("index");
+		Map<String, String> freebase = db.getCollection("freebase");
 		Map<String, String> labels = db.getCollection("label");
 		for (WikipediaLabelToFreebaseRecord record : reader) {
 			map.put(record.getCleanWikipediaLabel(), record.getFreebaseId());
+			freebase.put(record.getFreebaseId(),
+					record.getCleanWikipediaLabel());
 			labels.put(record.getFreebaseId(), record.getLabel());
 			pl.up();
 		}
@@ -88,5 +91,4 @@ public class IndexWikipediaLabelToFreebaseIdCLI extends
 		logger.info("file indexed, index in {}", cli.getParam("dbdir"));
 
 	}
-
 }
