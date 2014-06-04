@@ -85,12 +85,7 @@ public class Annotator {
 	 * SHORT
 	 */
 	public List<Annotation> annotate(String runId, String textID, String text) {
-		if (runId.contains("@1")) {
-			tagme();
-		}
-		if (runId.contains("@2")) {
-			wikiminer();
-		}
+
 		AnnotatedDocument ad = client.annotate(text, 500);
 		logger.info("text:\n\n {} \n\n", text);
 		List<AnnotatedSpot> spots = ad.getSpots();
@@ -136,6 +131,12 @@ public class Annotator {
 
 	public List<ErdAnnotation> annotateLongDocument(String runId,
 			String textId, String text) {
+		if (runId.contains("@1")) {
+			tagme();
+		}
+		if (runId.contains("@2")) {
+			wikiminer();
+		}
 		AnnotatedDocument ad = client.annotate(text, 500);
 		ErdDocument erdDocument = new ErdDocument(runId, textId, text);
 		OffsetToLinePointConverter converter = null;
@@ -148,8 +149,8 @@ public class Annotator {
 
 		List<AnnotatedSpot> spots = ad.getSpots();
 		List<ErdAnnotation> annotations = new ArrayList<ErdAnnotation>();
-		logger.info("text:\n\n {} \n\n", text);
-		logger.info("spots annotated:\n\n {} \n\n", spots.size());
+		// logger.info("text:\n\n {} \n\n", text);
+		// logger.info("spots annotated:\n\n {} \n\n", spots.size());
 		for (AnnotatedSpot spot : spots) {
 			String freebaseid;
 			if (spot.getScore() < confidence) {
