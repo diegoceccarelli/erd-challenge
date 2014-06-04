@@ -18,6 +18,7 @@ package it.cnr.isti.hpc.erd;
 import it.cnr.isti.hpc.dexter.rest.client.DexterRestClient;
 import it.cnr.isti.hpc.dexter.rest.domain.AnnotatedDocument;
 import it.cnr.isti.hpc.dexter.rest.domain.AnnotatedSpot;
+import it.cnr.isti.hpc.erd.text.OffsetToLinePointConverter;
 import it.cnr.isti.hpc.io.IOUtils;
 import it.cnr.isti.hpc.property.ProjectProperties;
 
@@ -66,7 +67,6 @@ public class Annotator {
 			System.exit(-1);
 		}
 		map = new WikipediaToFreebase("mapdb");
-		wikiminer();
 	}
 
 	public void tagme() {
@@ -85,7 +85,12 @@ public class Annotator {
 	 * SHORT
 	 */
 	public List<Annotation> annotate(String runId, String textID, String text) {
-
+		if (runId.contains("@1")) {
+			tagme();
+		}
+		if (runId.contains("@2")) {
+			wikiminer();
+		}
 		AnnotatedDocument ad = client.annotate(text, 500);
 		logger.info("text:\n\n {} \n\n", text);
 		List<AnnotatedSpot> spots = ad.getSpots();
@@ -132,8 +137,14 @@ public class Annotator {
 	public List<ErdAnnotation> annotateLongDocument(String runId,
 			String textId, String text) {
 		AnnotatedDocument ad = client.annotate(text, 500);
-		ErdDocument erdDocument = new ErdDocument(runId, textId, text, true);
-		writeLog(erdDocument);
+		ErdDocument erdDocument = new ErdDocument(runId, textId, text);
+		OffsetToLinePointConverter converter = null;
+		try {
+			converter = new OffsetToLinePointConverter().loadString(text);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		List<AnnotatedSpot> spots = ad.getSpots();
 		List<ErdAnnotation> annotations = new ArrayList<ErdAnnotation>();
@@ -156,14 +167,18 @@ public class Annotator {
 			a.setPrimaryId(freebaseid);
 			a.setSecondId(spot.getWikiname());
 			a.setMentionText(spot.getMention());
-			a.setStart(spot.getStart());
-			a.setEnd(spot.getEnd());
+			int byteoffsetStart = converter.getCodepoint(spot.getStart());
+			a.setStart(byteoffsetStart);
+			int byteoffsetEnd = converter.getCodepoint(spot.getEnd());
+
+			a.setEnd(byteoffsetEnd);
 			a.setScore1(spot.getScore());
 			a.setScore2(spot.getCommonness());
 			annotations.add(a);
 
 		}
-
+		erdDocument.setAnnotations(annotations);
+		writeLog(erdDocument);
 		return annotations;
 	}
 
@@ -171,14 +186,17 @@ public class Annotator {
 		String runId;
 		String textId;
 		String text;
-		boolean hit;
+		List<ErdAnnotation> annotations;
 
-		public ErdDocument(String runId, String textId, String text, boolean hit) {
+		public ErdDocument(String runId, String textId, String text) {
 			super();
 			this.runId = runId;
 			this.textId = textId;
-			this.hit = hit;
 			this.text = text;
+		}
+
+		public void setAnnotations(List<ErdAnnotation> annotations) {
+			this.annotations = annotations;
 		}
 
 	}
