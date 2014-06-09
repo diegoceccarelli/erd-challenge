@@ -26,6 +26,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -158,8 +159,14 @@ public class Annotator {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		List<AnnotatedSpot> spots;
+		if (ad == null) {
+			spots = Collections.emptyList();
 
-		List<AnnotatedSpot> spots = ad.getSpots();
+		} else {
+			spots = ad.getSpots();
+		}
+
 		List<ErdAnnotation> annotations = new ArrayList<ErdAnnotation>();
 		// logger.info("text:\n\n {} \n\n", text);
 		// logger.info("spots annotated:\n\n {} \n\n", spots.size());
