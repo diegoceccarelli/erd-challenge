@@ -161,6 +161,7 @@ public class Annotator {
 		}
 		List<AnnotatedSpot> spots;
 		if (ad == null) {
+			System.out.println("client return " + ad);
 			spots = Collections.emptyList();
 
 		} else {
