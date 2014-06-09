@@ -78,18 +78,18 @@ public class RestService {
 		return sb.toString();
 	}
 
-	@GET
-	@Path("/longTrac")
-	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	@Produces({ MediaType.TEXT_PLAIN })
-	public String annotateLongPost(@QueryParam("runID") String runId,
-			@QueryParam("TextID") String textId, @QueryParam("Text") String text) {
-
-		List<ErdAnnotation> annotations = annotator.annotateLongDocument(runId,
-				textId, text);
-
-		return ErdAnnotation.encodeAnnotations(annotations);
-	}
+	// @GET
+	// @Path("/longTrac")
+	// @Consumes(MediaType.MULTIPART_FORM_DATA)
+	// @Produces({ MediaType.TEXT_PLAIN })
+	// public String annotateLongPost(@QueryParam("runID") String runId,
+	// @QueryParam("TextID") String textId, @QueryParam("Text") String text) {
+	//
+	// List<ErdAnnotation> annotations = annotator.annotateLongDocument(runId,
+	// textId, text);
+	//
+	// return ErdAnnotation.encodeAnnotations(annotations);
+	// }
 
 	@POST
 	@Path("/longTrac")
