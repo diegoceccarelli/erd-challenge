@@ -34,6 +34,8 @@ import java.util.Map;
 public class OffsetToLinePointConverter {
 
 	Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+	Map<Integer, Integer> imap = new HashMap<Integer, Integer>();
+
 	StringBuffer sb = new StringBuffer();
 
 	public OffsetToLinePointConverter() {
@@ -48,10 +50,14 @@ public class OffsetToLinePointConverter {
 		int codepoint = 0;
 		while ((c = reader.read()) != -1) {
 			map.put(index, codepoint);
+			imap.put(codepoint, index);
+			System.out.println(codepoint + " -> " + index);
 			codepoint += Character.charCount(codepoint);
 			sb.append((char) c);
 			index++;
 		}
+		map.put(index, codepoint);
+		imap.put(codepoint, index);
 
 	}
 
@@ -89,5 +95,10 @@ public class OffsetToLinePointConverter {
 		while ((index = text.indexOf("JAPAN", index + 1)) != -1) {
 			System.out.println(conv.getCodepoint(index));
 		}
+	}
+
+	public int getOffset(Integer int1) {
+		System.out.println("offset " + int1);
+		return imap.get(int1);
 	}
 }

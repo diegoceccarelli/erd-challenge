@@ -23,6 +23,7 @@ import it.cnr.isti.hpc.erd.ErdAnnotation;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -100,6 +101,28 @@ public class RestService {
 
 		List<ErdAnnotation> annotations = annotator.annotateLongDocument(runId,
 				textId, text);
+
+		return ErdAnnotation.encodeAnnotations(annotations);
+	}
+
+	@POST
+	@Path("/long")
+	public String annotatELongPost(@FormParam("runID") String runId,
+			@FormParam("TextID") String textId, @FormParam("Text") String text) {
+
+		List<ErdAnnotation> annotations = annotator.annotateLongDocument(runId,
+				textId, text);
+
+		return ErdAnnotation.encodeAnnotations(annotations);
+	}
+
+	@POST
+	@Path("/longjson")
+	public String jsonLong(@FormParam("runID") String runId,
+			@FormParam("TextID") String textId, @FormParam("Text") String text) {
+
+		List<ErdAnnotation> annotations = annotator.annotateLongDocument(
+				"jsonall", textId, text);
 
 		return ErdAnnotation.encodeAnnotations(annotations);
 	}

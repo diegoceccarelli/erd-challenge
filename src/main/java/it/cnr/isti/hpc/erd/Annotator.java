@@ -73,12 +73,16 @@ public class Annotator {
 		client.addParams("dsb", "tagme");
 		client.addParams("epsilon", "0.8");
 
-		client.addParams("window-size", "100");
+		client.addParams("window-size", "120");
 		client.addParams("alpha", "0.5");
 	}
 
 	public void wikiminer() {
 		client.addParams("dsb", "wikiminer");
+	}
+
+	public void okkam() {
+		client.addParams("dsb", "okkam");
 	}
 
 	/**
@@ -137,6 +141,14 @@ public class Annotator {
 		if (runId.contains("@2")) {
 			wikiminer();
 		}
+
+		if (runId.contains("@3")) {
+			okkam();
+		}
+		if (runId.contains("jsonlong")) {
+			okkam();
+		}
+
 		AnnotatedDocument ad = client.annotate(text, 500);
 		ErdDocument erdDocument = new ErdDocument(runId, textId, text);
 		OffsetToLinePointConverter converter = null;
@@ -159,9 +171,11 @@ public class Annotator {
 				continue;
 			}
 			if (!map.hasEntity(spot.getWikiname())) {
-				continue;
+				// continue;
+				freebaseid = "NIL";
+			} else {
+				freebaseid = map.getFreebaseId(spot.getWikiname());
 			}
-			freebaseid = map.getFreebaseId(spot.getWikiname());
 			logger.info("{} -> {} ", spot.getWikiname(), freebaseid);
 			ErdAnnotation a = new ErdAnnotation();
 			a.setDocId(textId);
@@ -181,25 +195,6 @@ public class Annotator {
 		erdDocument.setAnnotations(annotations);
 		writeLog(erdDocument);
 		return annotations;
-	}
-
-	public static class ErdDocument {
-		String runId;
-		String textId;
-		String text;
-		List<ErdAnnotation> annotations;
-
-		public ErdDocument(String runId, String textId, String text) {
-			super();
-			this.runId = runId;
-			this.textId = textId;
-			this.text = text;
-		}
-
-		public void setAnnotations(List<ErdAnnotation> annotations) {
-			this.annotations = annotations;
-		}
-
 	}
 
 }
