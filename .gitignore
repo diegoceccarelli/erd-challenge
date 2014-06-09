@@ -11,3 +11,8 @@ target
 libs
 .DS_Store
 project.properties
+*json
+*html
+*tsv
+mapdb
+*log
